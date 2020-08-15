@@ -3,6 +3,8 @@ package org.username4db.controller;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,8 @@ import org.username4db.repository.RecordRepo;
 @RequestMapping(value = "/api")
 public class ApiController {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	private RecordRepo recordRepo;
 
@@ -29,6 +33,7 @@ public class ApiController {
 			, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	ResDTO doSave(@PathVariable String key, @RequestBody ReqDTO req) {
+		LOGGER.debug(req.toString());
 		Rec rec = new Rec();
 		rec.setKey(key);
 		rec.setValue(req.getValue());
@@ -38,6 +43,7 @@ public class ApiController {
 		res.setValue(req.getValue());
 		res.setDecimal(BigDecimal.TEN);
 		res.setDatetime(LocalDateTime.now());
+		LOGGER.debug(res.toString());
 		return res;
 	}
 }
