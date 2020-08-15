@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.username4db.dao.RecordRepo;
 import org.username4db.dto.ReqDTO;
 import org.username4db.dto.ResDTO;
 import org.username4db.entity.Rec;
-import org.username4db.repository.RecordRepo;
 
 @RestController
 @RequestMapping(value = "/api")

@@ -1,4 +1,4 @@
-package org.username4db.repository;
+package org.username4db.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.username4db.entity.Rec;
