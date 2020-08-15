@@ -1,4 +1,4 @@
-# java-getting-started
+# https://javagit2heroku.herokuapp.com
 
 A barebones Java app, which can easily be deployed to Heroku.
 
