@@ -1,4 +1,4 @@
-package org.username4db.dto;
+package org.username4db.dto.api;
 
 public class ReqDTO {
 
