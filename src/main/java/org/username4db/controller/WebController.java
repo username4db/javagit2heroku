@@ -13,7 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class DbController {
+@RequestMapping(value = "/")
+public class WebController {
 
 	@Autowired
 	private DataSource dataSource;
@@ -23,7 +24,7 @@ public class DbController {
 		return "index";
 	}
 
-	@RequestMapping("/db")
+	@RequestMapping("/web")
 	String db(Map<String, Object> model) {
 		try (Connection connection = dataSource.getConnection()) {
 			Statement stmt = connection.createStatement();

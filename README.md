@@ -1,4 +1,4 @@
-# https://javagit2heroku.herokuapp.com
+# https://javagit2heroku.herokuapp.com/api/save/{id}
 
 A barebones Java app, which can easily be deployed to Heroku.
 

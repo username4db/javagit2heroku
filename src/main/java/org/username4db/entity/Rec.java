@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Record implements Serializable {
+public class Rec implements Serializable {
 	/**
 	 * 
 	 */
@@ -16,12 +16,12 @@ public class Record implements Serializable {
 
 	private String value;
 
-	public String getpKey() {
+	public String getKey() {
 		return key;
 	}
 
-	public void setpKey(String pKey) {
-		this.key = pKey;
+	public void setKey(String Key) {
+		this.key = Key;
 	}
 
 	public String getValue() {
