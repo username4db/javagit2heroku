@@ -10,7 +10,11 @@ public class BatchJob {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-	// 每天21點41分50秒執行
+	@Scheduled(fixedRate = 3600000)
+	public void timerRate() {
+		LOGGER.info("");
+	}
+
 	@Scheduled(cron = "00 00 18 * * ?")
 	public void timerCron() {
 		LOGGER.info("");
