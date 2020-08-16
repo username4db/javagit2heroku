@@ -1,10 +1,14 @@
 # https://javagit2heroku.herokuapp.com/api/save/{id}
 
-A barebones Java app, which can easily be deployed to Heroku.
 
-This application supports the [Getting Started with Java on Heroku](https://devcenter.heroku.com/articles/getting-started-with-java) article - check it out.
+POST https://javagit2heroku.herokuapp.com/api/save/test HTTP/1.1
+Content-Type: application/json
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+{
+    "key" : "test",
+    "value" : "test"
+}
+
 
 ## Running Locally
 
