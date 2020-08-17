@@ -10,17 +10,9 @@ public class ResDTO {
 	private String key;
 	private String value;
 	private BigDecimal decimal;
+	private LocalDateTime serverDatetime;
 	@JsonFormat(timezone = "Asia/Taipei")
-	private LocalDateTime datetime;
-	private String valueCapition;
-
-	public String getValueCapition() {
-		return valueCapition;
-	}
-
-	public void setValueCapition(String valueCapition) {
-		this.valueCapition = valueCapition;
-	}
+	private LocalDateTime clientDatetime;
 
 	public String getKey() {
 		return key;
@@ -46,18 +38,26 @@ public class ResDTO {
 		this.decimal = decimal;
 	}
 
-	public LocalDateTime getDatetime() {
-		return datetime;
+	public LocalDateTime getServerDatetime() {
+		return serverDatetime;
 	}
 
-	public void setDatetime(LocalDateTime datetime) {
-		this.datetime = datetime;
+	public void setServerDatetime(LocalDateTime serverDatetime) {
+		this.serverDatetime = serverDatetime;
+	}
+
+	public LocalDateTime getClientDatetime() {
+		return clientDatetime;
+	}
+
+	public void setClientDatetime(LocalDateTime clientDatetime) {
+		this.clientDatetime = clientDatetime;
 	}
 
 	@Override
 	public String toString() {
-		return "ResDTO [key=" + key + ", value=" + value + ", decimal=" + decimal + ", datetime=" + datetime
-				+ ", valueCapition=" + valueCapition + "]";
+		return "ResDTO [key=" + key + ", value=" + value + ", decimal=" + decimal + ", serverDatetime=" + serverDatetime
+				+ ", clientDatetime=" + clientDatetime + "]";
 	}
 
 }

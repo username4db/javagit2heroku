@@ -2,6 +2,7 @@ package org.username4db.controller;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,10 +41,10 @@ public class ApiController {
 		recordRepo.save(rec);
 		ResDTO res = new ResDTO();
 		res.setKey(key);
-		res.setValue(req.getValue());
+		res.setValue(TimeZone.getDefault().getDisplayName());
 		res.setDecimal(BigDecimal.TEN);
-		res.setDatetime(LocalDateTime.now());
-		res.setValueCapition(req.getValueCapition());
+		res.setServerDatetime(LocalDateTime.now());
+		res.setClientDatetime(LocalDateTime.now());
 		LOGGER.debug(res.toString());
 		return res;
 	}
