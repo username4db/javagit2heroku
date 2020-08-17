@@ -4,6 +4,15 @@ public class ReqDTO {
 
 	private String key;
 	private String value;
+	private String valueCapition;
+
+	public String getValueCapition() {
+		return valueCapition;
+	}
+
+	public void setValueCapition(String valueCapition) {
+		this.valueCapition = valueCapition;
+	}
 
 	public String getKey() {
 		return key;
@@ -23,7 +32,7 @@ public class ReqDTO {
 
 	@Override
 	public String toString() {
-		return "ReqDTO [key=" + key + ", value=" + value + "]";
+		return "ReqDTO [key=" + key + ", value=" + value + ", valueCapition=" + valueCapition + "]";
 	}
 
 }

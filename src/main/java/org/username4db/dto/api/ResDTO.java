@@ -9,6 +9,15 @@ public class ResDTO {
 	private String value;
 	private BigDecimal decimal;
 	private LocalDateTime datetime;
+	private String valueCapition;
+
+	public String getValueCapition() {
+		return valueCapition;
+	}
+
+	public void setValueCapition(String valueCapition) {
+		this.valueCapition = valueCapition;
+	}
 
 	public String getKey() {
 		return key;
@@ -44,7 +53,8 @@ public class ResDTO {
 
 	@Override
 	public String toString() {
-		return "ResDTO [key=" + key + ", value=" + value + ", decimal=" + decimal + ", datetime=" + datetime + "]";
+		return "ResDTO [key=" + key + ", value=" + value + ", decimal=" + decimal + ", datetime=" + datetime
+				+ ", valueCapition=" + valueCapition + "]";
 	}
 
 }

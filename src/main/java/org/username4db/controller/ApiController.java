@@ -43,6 +43,7 @@ public class ApiController {
 		res.setValue(req.getValue());
 		res.setDecimal(BigDecimal.TEN);
 		res.setDatetime(LocalDateTime.now());
+		res.setValueCapition(req.getValueCapition());
 		LOGGER.debug(res.toString());
 		return res;
 	}
