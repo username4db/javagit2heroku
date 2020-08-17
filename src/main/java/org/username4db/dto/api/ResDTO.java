@@ -3,11 +3,14 @@ package org.username4db.dto.api;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ResDTO {
 
 	private String key;
 	private String value;
 	private BigDecimal decimal;
+	@JsonFormat(timezone = "Asia/Taipei")
 	private LocalDateTime datetime;
 	private String valueCapition;
 

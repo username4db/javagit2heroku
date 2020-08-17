@@ -29,8 +29,8 @@ public class ApiController {
 
 	@RequestMapping(value = "/save/{key}" //
 			, method = RequestMethod.POST //
-			, consumes = MediaType.APPLICATION_JSON_VALUE //
-			, produces = MediaType.APPLICATION_JSON_VALUE)
+			, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE } //
+			, produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE })
 	@ResponseBody
 	ResDTO doSave(@PathVariable String key, @RequestBody ReqDTO req) {
 		LOGGER.debug(req.toString());

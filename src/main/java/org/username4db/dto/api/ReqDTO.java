@@ -1,7 +1,10 @@
 package org.username4db.dto.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ReqDTO {
 
+	@JsonProperty(value = "KEY", required = true)
 	private String key;
 	private String value;
 	private String valueCapition;
