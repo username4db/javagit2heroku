@@ -1,4 +1,4 @@
-package org.username4db.vo;
+package org.username4db.entity;
 
 import java.io.Serializable;
 
