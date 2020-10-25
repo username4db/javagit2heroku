@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.username4db.repository.RecordRepo;
 
 @Controller
 @RequestMapping(value = "/")
@@ -19,13 +20,16 @@ public class WebController {
 	@Autowired
 	private DataSource dataSource;
 
+	@Autowired
+	private RecordRepo recordRepo;
+
 	@RequestMapping("/")
 	String index() {
 		return "index";
 	}
 
-	@RequestMapping("/web")
-	String db(Map<String, Object> model) {
+	@RequestMapping("/ticks")
+	String ticks(Map<String, Object> model) {
 		try (Connection connection = dataSource.getConnection()) {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
@@ -43,6 +47,12 @@ public class WebController {
 			model.put("message", e.getMessage());
 			return "error";
 		}
+	}
+
+	@RequestMapping("/rec")
+	String rec(Map<String, Object> model) {
+		model.put("recs", recordRepo.findAll());
+		return "rec";
 	}
 
 }
