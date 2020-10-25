@@ -6,10 +6,16 @@
 
 
 	<div class="container">
-		<h1>Database Output</h1>
-		<ul th:each="rec : ${recs}">
-			<li th:text="${rec.value}" />
-		</ul>
+
+		<fieldset>
+			<legend>Database Output</legend>
+			<table>
+				<tr th:each="rec : ${recs}">
+					<td th:text="${rec.key}" />
+					<td th:text="${rec.value}" />
+				</tr>
+			</table>
+		</fieldset>
 	</div>
 
 </body>
