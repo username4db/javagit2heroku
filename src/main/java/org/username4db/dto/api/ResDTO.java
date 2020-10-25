@@ -4,13 +4,23 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ResDTO {
 
+	@JsonProperty(value = "OUTPUT-KEY")
 	private String key;
+
+	@JsonProperty(value = "OUTPUT-VALUE")
 	private String value;
+
+	@JsonProperty(value = "OUTPUT-DECIMAL")
 	private BigDecimal decimal;
+
+	@JsonProperty(value = "OUTPUT-SERVERTIME")
 	private LocalDateTime serverDatetime;
+
+	@JsonProperty(value = "OUTPUT-CLIENTTIME")
 	@JsonFormat(timezone = "Asia/Taipei")
 	private LocalDateTime clientDatetime;
 

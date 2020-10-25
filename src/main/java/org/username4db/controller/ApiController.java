@@ -34,7 +34,6 @@ public class ApiController {
 			, produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE })
 	@ResponseBody
 	ResDTO doSave(@PathVariable String key, @RequestBody ReqDTO req) {
-		LOGGER.debug(req.toString());
 		Rec rec = new Rec();
 		rec.setKey(key);
 		rec.setValue(req.getValue());

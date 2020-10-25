@@ -4,9 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ReqDTO {
 
-	@JsonProperty(value = "KEY", required = true)
+	@JsonProperty(value = "INPUT-KEY", required = true)
 	private String key;
+
+	@JsonProperty(value = "INPUT-VALUE", required = true)
 	private String value;
+
+	@JsonProperty(value = "INPUT-CAPTION", required = true)
 	private String valueCapition;
 
 	public String getValueCapition() {
