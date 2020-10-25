@@ -34,7 +34,7 @@ public class ApiController {
 			, produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE })
 	@ResponseBody
 	ResDTO doSave(@PathVariable String key, @RequestBody ReqDTO req) {
-		recordRepo.deleteAll();
+		// recordRepo.deleteAll();
 		Rec rec = new Rec();
 		rec.setKey(req.getKey());
 		rec.setValue(req.getValue());
