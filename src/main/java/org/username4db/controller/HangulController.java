@@ -32,6 +32,6 @@ public class HangulController {
 		LOGGER.info(req.toString());
 		res.setChracters(service.syllable(req.getCharacters()));
 		LOGGER.info(res.toString());
-		return null;
+		return res;
 	}
 }
