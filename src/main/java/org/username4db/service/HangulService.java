@@ -4,10 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class HangulService {
+
+	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
 	private final Map<String, Integer> mapInitial = new HashMap<>();
 
@@ -120,6 +124,8 @@ public class HangulService {
 
 	public String syllable(String chars) {
 		StringBuilder characters = new StringBuilder(chars);
+		LOGGER.info(characters.toString());
+		
 		String sInitial = StringUtils.trimToNull(StringUtils.substring(characters.toString(), 0, 1));
 		String sMedial = StringUtils.trimToNull(StringUtils.substring(characters.toString(), 1, 2));
 		String sFinal = StringUtils.trimToNull(StringUtils.substring(characters.toString(), 2, 3));

@@ -29,9 +29,9 @@ public class HangulController {
 	@ResponseBody
 	ResHangul doSyllable(@RequestBody ReqHangul req) {
 		ResHangul res = new ResHangul();
-		LOGGER.debug(req.toString());
+		LOGGER.info(req.toString());
 		res.setChracters(service.syllable(req.getCharacters()));
-		LOGGER.debug(res.toString());
+		LOGGER.info(res.toString());
 		return null;
 	}
 }
