@@ -24,7 +24,7 @@ public class HangulController {
 	private HangulService service;
 
 	@RequestMapping(value = "/syllable" //
-			, method = { RequestMethod.POST } //
+			, method = RequestMethod.POST //
 			, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE } //
 			, produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE })
 	@ResponseBody
@@ -37,15 +37,12 @@ public class HangulController {
 	}
 
 	@RequestMapping(value = "/syllable/{key}" //
-			, method = { RequestMethod.GET } //
-			, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE, MediaType.TEXT_PLAIN_VALUE } //
-			, produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE, MediaType.TEXT_PLAIN_VALUE })
-	@ResponseBody
-	ResHangul doGet(@PathVariable String chars, @RequestBody ReqHangul req) {
+			, method = RequestMethod.GET)
+	ResHangul doGet(@PathVariable String chars) {
 		ResHangul res = new ResHangul();
-		LOGGER.info(req.toString());
+		LOGGER.info(chars);
 		res.setChracters(service.syllable(chars));
-		LOGGER.info(res.toString());
+		LOGGER.info(chars);
 		return res;
 	}
 
