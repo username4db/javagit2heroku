@@ -21,6 +21,11 @@ Content-Type: application/json
 }
 ```
 
+```
+GET https://javagit2heroku.herokuapp.com/hangul/syllable/ㅂㅑㄷ HTTP/1.1
+```
+
+
 ## Running Locally
 
 Make sure you have Java and Maven installed.  Also, install the [Heroku CLI](https://cli.heroku.com/).
