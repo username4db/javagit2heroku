@@ -7,17 +7,17 @@ public class ResHangul {
 	@JsonProperty(value = "CHARACTERS")
 	private String chracters;
 
-	@Override
-	public String toString() {
-		return "ResHangul [chracters=" + chracters + "]";
-	}
-
 	public String getChracters() {
 		return chracters;
 	}
 
 	public void setChracters(String chracters) {
 		this.chracters = chracters;
+	}
+
+	@Override
+	public String toString() {
+		return "ResHangul [chracters=" + chracters + "]";
 	}
 
 }

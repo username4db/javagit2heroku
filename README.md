@@ -1,6 +1,7 @@
 # https://javagit2heroku.herokuapp.com/api/save/{id}
 
-
+## /api/save/{key}
+```
 POST https://javagit2heroku.herokuapp.com/api/save/test HTTP/1.1
 Content-Type: application/json
 
@@ -8,7 +9,17 @@ Content-Type: application/json
     "key" : "test",
     "value" : "test"
 }
+```
 
+## /hangul/syllable
+```
+POST https://javagit2heroku.herokuapp.com/hangul/syllable HTTP/1.1
+Content-Type: application/json
+
+{
+    "CHARACTERS" : "ㅂㅑㄷ"
+}
+```
 
 ## Running Locally
 
