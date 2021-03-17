@@ -38,8 +38,8 @@ public class HangulController {
 
 	@RequestMapping(value = "/syllable/{key}" //
 			, method = { RequestMethod.GET } //
-			, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE } //
-			, produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE })
+			, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE, MediaType.TEXT_PLAIN_VALUE } //
+			, produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE, MediaType.TEXT_PLAIN_VALUE })
 	@ResponseBody
 	ResHangul doGet(@PathVariable String chars, @RequestBody ReqHangul req) {
 		ResHangul res = new ResHangul();
