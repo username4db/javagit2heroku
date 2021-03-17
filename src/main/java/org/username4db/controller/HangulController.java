@@ -36,7 +36,7 @@ public class HangulController {
 		return res;
 	}
 
-	@RequestMapping(value = "/syllable/{key}" //
+	@RequestMapping(value = "/syllable/{chars}" //
 			, method = RequestMethod.GET)
 	ResHangul doGet(@PathVariable String chars) {
 		ResHangul res = new ResHangul();
