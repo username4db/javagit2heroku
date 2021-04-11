@@ -20,9 +20,13 @@ import org.username4db.entity.Rec;
 import org.username4db.repository.RecordRepo;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping(value = "/api")
+@Tag(name = " @Tag name ", description = "@Tag description")
 public class ApiController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
@@ -36,7 +40,12 @@ public class ApiController {
 			, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE } //
 			, produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE })
 	@ResponseBody
-	ResDTO doSave(@PathVariable String key, @RequestBody ReqDTO req) {
+	ResDTO doSave(//
+			@Parameter(description = "@Parameter description") //
+			@PathVariable String key //
+			,
+			@Parameter(description = "@Parameter description.", required = true, schema = @Schema(implementation = ReqDTO.class)) //
+			@RequestBody ReqDTO req) {
 		// recordRepo.deleteAll();
 		Rec rec = new Rec();
 		rec.setKey(req.getKey());
