@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 
 public class ReqDTO {
 
-	@Parameter(description = "key")
+	@Parameter(name = "@Parameter name", description = "@Parameter description", required = true)
 	@JsonProperty(value = "INPUT-KEY", required = true)
 	private String key;
 

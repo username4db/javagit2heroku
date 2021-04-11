@@ -30,7 +30,7 @@ public class ApiController {
 	@Autowired
 	private RecordRepo recordRepo;
 
-	@Operation(summary = " save data")
+	@Operation(method = "POST", summary = " @Operation summary", description = " @Operation description")
 	@RequestMapping(value = "/save/{key}" //
 			, method = RequestMethod.POST //
 			, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE } //
