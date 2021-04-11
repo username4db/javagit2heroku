@@ -19,6 +19,8 @@ import org.username4db.dto.api.ResDTO;
 import org.username4db.entity.Rec;
 import org.username4db.repository.RecordRepo;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping(value = "/api")
 public class ApiController {
@@ -28,6 +30,7 @@ public class ApiController {
 	@Autowired
 	private RecordRepo recordRepo;
 
+	@Operation(summary = " save data")
 	@RequestMapping(value = "/save/{key}" //
 			, method = RequestMethod.POST //
 			, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE } //

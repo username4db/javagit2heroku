@@ -1,3 +1,9 @@
+# Open API/UI
+```
+https://javagit2heroku.herokuapp.com/api-docs/
+https://javagit2heroku.herokuapp.com/swagger-ui.html
+```
+
 # https://javagit2heroku.herokuapp.com/api/save/{id}
 
 ## /api/save/{key}

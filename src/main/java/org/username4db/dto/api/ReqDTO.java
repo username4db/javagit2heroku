@@ -2,14 +2,19 @@ package org.username4db.dto.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.v3.oas.annotations.Parameter;
+
 public class ReqDTO {
 
+	@Parameter(description = "key")
 	@JsonProperty(value = "INPUT-KEY", required = true)
 	private String key;
 
+	@Parameter(description = "value")
 	@JsonProperty(value = "INPUT-VALUE", required = true)
 	private String value;
 
+	@Parameter(description = "caption")
 	@JsonProperty(value = "INPUT-CAPTION", required = true)
 	private String valueCapition;
 
