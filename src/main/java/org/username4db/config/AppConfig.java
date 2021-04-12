@@ -36,7 +36,7 @@ public class AppConfig {
 	@Profile("!local")
 	public DataSource dataSource() throws SQLException {
 
-		LOGGER.info("dbUrl = ", dbUrl);
+		LOGGER.info("dbUrl = {} ", dbUrl);
 
 		if (dbUrl == null || dbUrl.isEmpty()) {
 			return new HikariDataSource();
@@ -53,7 +53,7 @@ public class AppConfig {
 	@Profile("local")
 	public DataSource localDataSource() throws SQLException {
 
-		LOGGER.info("dbUrl = ", dbUrl);
+		LOGGER.info("dbUrl = {} ", dbUrl);
 
 		return DataSourceBuilder //
 				.create() //

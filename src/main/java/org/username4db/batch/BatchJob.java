@@ -10,7 +10,7 @@ public class BatchJob {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-	@Scheduled(fixedRate = 3600000)
+	@Scheduled(fixedRate = 60000)
 	public void timerRate() {
 		LOGGER.info("");
 	}
