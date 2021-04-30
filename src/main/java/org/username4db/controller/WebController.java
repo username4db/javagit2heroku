@@ -1,9 +1,11 @@
 package org.username4db.controller;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -11,7 +13,14 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.username4db.repository.RecordRepo;
+
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlButton;
+import com.gargoylesoftware.htmlunit.html.HtmlInput;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 
 @Controller
 @RequestMapping(value = "/")
@@ -53,6 +62,35 @@ public class WebController {
 	String rec(Map<String, Object> model) {
 		model.put("recs", recordRepo.findAll());
 		return "rec";
+	}
+
+	@RequestMapping("/htmlUnit")
+	@ResponseBody
+	public String htmlUnit() throws Exception {
+		WebClient webClient = new WebClient();
+		HtmlPage page = webClient.getPage("https://findbiz.nat.gov.tw/fts/query/QueryBar/queryInit.do");
+
+		HtmlInput qryCond = (HtmlInput) page.getElementById("qryCond");
+		qryCond.setValueAttribute("04231910");
+		HtmlInput infoDefault = (HtmlInput) page.getElementById("infoDefault");
+		infoDefault.click();
+
+		page.getElementsByName("qryType").stream().forEach(ele -> {
+			try {
+				ele.click();
+			} catch (IOException e) {
+			}
+		});
+
+		HtmlButton qryBtn = (HtmlButton) page.getElementById("qryBtn");
+		page = qryBtn.click();
+
+		List<HtmlSpan> detail = page.getByXPath("//span[@class='moreLinkMouseOut']");
+		if (1 == detail.size()) {
+			page = detail.get(0).click();
+		}
+		webClient.close();
+		return page.asXml();
 	}
 
 }
