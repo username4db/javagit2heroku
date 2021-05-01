@@ -18,9 +18,11 @@ import org.username4db.repository.RecordRepo;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlButton;
+import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSpan;
+import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
 @Controller
 @RequestMapping(value = "/")
@@ -67,30 +69,34 @@ public class WebController {
 	@RequestMapping("/htmlUnit")
 	@ResponseBody
 	public String htmlUnit() throws Exception {
-		WebClient webClient = new WebClient();
-		HtmlPage page = webClient.getPage("https://findbiz.nat.gov.tw/fts/query/QueryBar/queryInit.do");
+		String xml = "";
+		try (final WebClient webClient = new WebClient()) {
+			HtmlPage page = webClient.getPage("https://findbiz.nat.gov.tw/fts/query/QueryBar/queryInit.do");
 
-		HtmlInput qryCond = (HtmlInput) page.getElementById("qryCond");
-		qryCond.setValueAttribute("04231910");
-		HtmlInput infoDefault = (HtmlInput) page.getElementById("infoDefault");
-		infoDefault.click();
+			final HtmlForm queryListForm = page.getFormByName("queryListForm");
+			final HtmlTextInput qryCond = queryListForm.getInputByName("qryCond");
+			qryCond.type("04231910");
 
-		page.getElementsByName("qryType").stream().forEach(ele -> {
-			try {
-				ele.click();
-			} catch (IOException e) {
+			final HtmlInput infoDefault = (HtmlInput) page.getElementById("infoDefault");
+			infoDefault.click();
+
+			page.getElementsByName("qryType").stream().forEach(ele -> {
+				try {
+					ele.click();
+				} catch (IOException e) {
+				}
+			});
+
+			final HtmlButton qryBtn = (HtmlButton) page.getElementById("qryBtn");
+			page = qryBtn.click();
+
+			final List<HtmlSpan> detail = page.getByXPath("//span[@class='moreLinkMouseOut']");
+			if (detail.size() > 0) {
+				page = detail.get(0).click();
 			}
-		});
-
-		HtmlButton qryBtn = (HtmlButton) page.getElementById("qryBtn");
-		page = qryBtn.click();
-
-		List<HtmlSpan> detail = page.getByXPath("//span[@class='moreLinkMouseOut']");
-		if (1 == detail.size()) {
-			page = detail.get(0).click();
+			xml = page.asXml();
 		}
-		webClient.close();
-		return page.asXml();
+		return xml;
 	}
 
 }
