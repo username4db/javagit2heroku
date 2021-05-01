@@ -11,10 +11,17 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.username4db.repository.RecordRepo;
 
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -34,6 +41,8 @@ public class WebController {
 
 	@Autowired
 	private RecordRepo recordRepo;
+
+	final private RestTemplate restTemplate = new RestTemplate();
 
 	@RequestMapping("/")
 	String index() {
@@ -99,6 +108,76 @@ public class WebController {
 			xml = page.asXml();
 		}
 		return xml;
+	}
+
+	@RequestMapping("/queryList")
+	@ResponseBody
+	public String queryList(@RequestParam(name = "ID", required = false, defaultValue = "04231910") String id) {
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		headers.set("Referer", "https://findbiz.nat.gov.tw/fts/query/QueryList/queryList.do");
+		headers.set("User-Agent", "");
+
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+		map.add("errorMsg", "");
+		map.add("validatorOpen", "N");
+		map.add("rlPermit", "0");
+		map.add("userResp", "");
+		map.add("curPage", "0");
+		map.add("fhl", "zh_TW");
+		map.add("qryCond", id);
+		map.add("infoType", "D");
+		map.add("qryType", "cmpyType");
+		map.add("cmpyType", "true");
+		map.add("qryType", "brCmpyType");
+		map.add("brCmpyType", "true");
+		map.add("qryType", "busmType");
+		map.add("busmType", "true");
+		map.add("qryType", "factType");
+		map.add("factType", "true");
+		map.add("qryType", "lmtdType");
+		map.add("lmtdType", "true");
+		map.add("isAlive", "all");
+
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+		ResponseEntity<String> response = restTemplate
+				.postForEntity("https://findbiz.nat.gov.tw/fts/query/QueryList/queryList.do", request, String.class);
+		return response.getBody();
+	}
+
+	@RequestMapping("/queryCmpyDetail")
+	@ResponseBody
+	public String queryCmpyDetail(@RequestParam(name = "ID", required = false, defaultValue = "04231910") String id) {
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		headers.set("Referer", "https://findbiz.nat.gov.tw/fts/query/QueryList/queryList.do");
+		headers.set("User-Agent", "");
+
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+		map.add("banNo", id);
+		map.add("brBanNo", "");
+		map.add("banKey", "");
+		map.add("estbId", "");
+		map.add("objectId", "");
+		map.add("CPage", "");
+		map.add("brCmpyPage", "");
+		map.add("eng", "false");
+		map.add("disj", "32559341517F1761DC36D961C9D6DC15");
+		map.add("fhl", "zh_TW");
+		map.add("CPageHistory", "");
+		map.add("historyPage", "");
+		map.add("chgAppDate", "");
+		map.add("translateAddress", "");
+		map.add("regUnitCode", "");
+
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+		ResponseEntity<String> response = restTemplate.postForEntity(
+				"https://findbiz.nat.gov.tw/fts/query/QueryCmpyDetail/queryCmpyDetail.do", request, String.class);
+		return response.getBody();
 	}
 
 }
