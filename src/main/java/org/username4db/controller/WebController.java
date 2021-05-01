@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.username4db.repository.RecordRepo;
@@ -68,14 +69,14 @@ public class WebController {
 
 	@RequestMapping("/htmlUnit")
 	@ResponseBody
-	public String htmlUnit() throws Exception {
+	public String htmlUnit(@PathVariable(name = "ID", required = false) String id) throws Exception {
 		String xml = "";
 		try (final WebClient webClient = new WebClient()) {
 			HtmlPage page = webClient.getPage("https://findbiz.nat.gov.tw/fts/query/QueryBar/queryInit.do");
 
 			final HtmlForm queryListForm = page.getFormByName("queryListForm");
 			final HtmlTextInput qryCond = queryListForm.getInputByName("qryCond");
-			qryCond.type("04231910");
+			qryCond.type(id);
 
 			final HtmlInput infoDefault = (HtmlInput) page.getElementById("infoDefault");
 			infoDefault.click();
