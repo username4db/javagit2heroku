@@ -5,14 +5,19 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -112,21 +117,21 @@ public class WebController {
 
 	@RequestMapping("/queryList")
 	@ResponseBody
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public String queryList(@RequestParam(name = "ID", required = false, defaultValue = "04231910") String id) {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		headers.set("Referer", "https://findbiz.nat.gov.tw/fts/query/QueryList/queryList.do");
-		headers.set("User-Agent", "");
+		headers.setAccept(Arrays.asList(MediaType.TEXT_HTML));
+		headers.setAcceptLanguageAsLocales(Arrays.asList(Locale.TRADITIONAL_CHINESE));
+		headers.setConnection("close");
+		headers.setOrigin("https://findbiz.nat.gov.tw");
+		headers.set(HttpHeaders.REFERER, "https://findbiz.nat.gov.tw/fts/query/QueryBar/queryInit.do");
+		headers.set(HttpHeaders.USER_AGENT, "Mozilla/5.0");
 
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-		map.add("errorMsg", "");
-		map.add("validatorOpen", "N");
-		map.add("rlPermit", "0");
-		map.add("userResp", "");
-		map.add("curPage", "0");
-		map.add("fhl", "zh_TW");
 		map.add("qryCond", id);
+		map.add("fhl", "zh_TW");
 		map.add("infoType", "D");
 		map.add("qryType", "cmpyType");
 		map.add("cmpyType", "true");
@@ -139,11 +144,24 @@ public class WebController {
 		map.add("qryType", "lmtdType");
 		map.add("lmtdType", "true");
 		map.add("isAlive", "all");
+		map.add("busiItemMain", "");
+		map.add("busiItemSub", "");
+		map.add("sugCont", "");
+		map.add("sugEmail", "");
+		map.add("g-recaptcha-response", "");
 
-		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+		HttpEntity request = new HttpEntity(map, headers);
 
 		ResponseEntity<String> response = restTemplate
 				.postForEntity("https://findbiz.nat.gov.tw/fts/query/QueryList/queryList.do", request, String.class);
+
+		if (HttpStatus.OK.equals(response.getStatusCode())) {
+			response.getHeaders().forEach((key, value) -> {
+				// LOGGER.info("{}={}", key, value);
+			});
+			Document htmlDoc = Jsoup.parse(id);
+			// LOGGER.info("disj = {} ", htmlDoc.getElementById("_disj").val());
+		}
 		return response.getBody();
 	}
 
@@ -153,8 +171,12 @@ public class WebController {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		headers.set("Referer", "https://findbiz.nat.gov.tw/fts/query/QueryList/queryList.do");
-		headers.set("User-Agent", "");
+		headers.setAccept(Arrays.asList(MediaType.TEXT_HTML));
+		headers.setAcceptLanguageAsLocales(Arrays.asList(Locale.TRADITIONAL_CHINESE));
+		headers.setConnection("close");
+		headers.setOrigin("https://findbiz.nat.gov.tw");
+		headers.set(HttpHeaders.REFERER, "https://findbiz.nat.gov.tw/fts/query/QueryList/queryList.do");
+		headers.set(HttpHeaders.USER_AGENT, "Mozilla/5.0");
 
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 		map.add("banNo", id);
@@ -177,6 +199,9 @@ public class WebController {
 
 		ResponseEntity<String> response = restTemplate.postForEntity(
 				"https://findbiz.nat.gov.tw/fts/query/QueryCmpyDetail/queryCmpyDetail.do", request, String.class);
+		response.getHeaders().forEach((key, value) -> {
+			// LOGGER.info("{}={}", key, value);
+		});
 		return response.getBody();
 	}
 
