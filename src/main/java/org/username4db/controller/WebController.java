@@ -23,11 +23,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.username4db.repository.RecordRepo;
+import org.username4db.utility.MD5;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlButton;
@@ -79,6 +81,14 @@ public class WebController {
 	String rec(Map<String, Object> model) {
 		model.put("recs", recordRepo.findAll());
 		return "rec";
+	}
+
+	@RequestMapping("/motp/{secret}/{PIN}")
+	String motp(@PathVariable(value = "secret") String secret, @PathVariable(value = "PIN") String PIN) {
+		String epoch = Long.toString(System.currentTimeMillis());
+		epoch = epoch.substring(0, epoch.length() - 4);
+		MD5 hash = new MD5(epoch + secret + PIN);
+		return hash.asHex().substring(0, 6);
 	}
 
 	@RequestMapping("/htmlUnit")
