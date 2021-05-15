@@ -88,15 +88,13 @@ public class WebController {
 	}
 
 	@RequestMapping("/motp/{secret}/{PIN}")
-	String motp(@PathVariable(value = "secret") String secret, @PathVariable(value = "PIN") String PIN) {
-		LOGGER.info(secret);
-		LOGGER.info(PIN);
+	String motp(Map<String, Object> model, @PathVariable(value = "secret") String secret,
+			@PathVariable(value = "PIN") String PIN) {
 		String epoch = Long.toString(System.currentTimeMillis());
 		epoch = epoch.substring(0, epoch.length() - 4);
-		LOGGER.info(epoch);
 		MD5 hash = new MD5(epoch + secret + PIN);
-		LOGGER.info(hash.asHex().substring(0, 6));
-		return hash.asHex().substring(0, 6);
+		model.put("motp", hash.asHex().substring(0, 6));
+		return "motp";
 	}
 
 	@RequestMapping("/htmlUnit")
