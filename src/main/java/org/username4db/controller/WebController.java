@@ -14,6 +14,8 @@ import javax.sql.DataSource;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -42,6 +44,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 @Controller
 @RequestMapping(value = "/")
 public class WebController {
+
+	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private DataSource dataSource;
@@ -85,13 +89,13 @@ public class WebController {
 
 	@RequestMapping("/motp/{secret}/{PIN}")
 	String motp(@PathVariable(value = "secret") String secret, @PathVariable(value = "PIN") String PIN) {
-		System.out.println(secret);
-		System.out.println(PIN);
+		LOGGER.info(secret);
+		LOGGER.info(PIN);
 		String epoch = Long.toString(System.currentTimeMillis());
 		epoch = epoch.substring(0, epoch.length() - 4);
-		System.out.println(epoch);
+		LOGGER.info(epoch);
 		MD5 hash = new MD5(epoch + secret + PIN);
-		System.out.println(hash.asHex().substring(0, 6));
+		LOGGER.info(hash.asHex().substring(0, 6));
 		return hash.asHex().substring(0, 6);
 	}
 
