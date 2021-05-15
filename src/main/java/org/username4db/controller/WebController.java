@@ -85,9 +85,13 @@ public class WebController {
 
 	@RequestMapping("/motp/{secret}/{PIN}")
 	String motp(@PathVariable(value = "secret") String secret, @PathVariable(value = "PIN") String PIN) {
+		System.out.println(secret);
+		System.out.println(PIN);
 		String epoch = Long.toString(System.currentTimeMillis());
 		epoch = epoch.substring(0, epoch.length() - 4);
+		System.out.println(epoch);
 		MD5 hash = new MD5(epoch + secret + PIN);
+		System.out.println(hash.asHex().substring(0, 6));
 		return hash.asHex().substring(0, 6);
 	}
 
