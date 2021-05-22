@@ -5,7 +5,7 @@
 	<code>
 		<div th:each="y : ${#numbers.sequence( 1, qr.size)}">
 			<span th:each="x : ${#numbers.sequence( 1, qr.size)}"> <!-- IF -->
-				<span th:if="${qr.getModule(x, y)}">*</span> <!-- ELSE --> <span
+				<span th:if="${qr.getModule(x, y)}">█</span> <!-- ELSE --> <span
 				th:unless="${qr.getModule(x, y)}">&nbsp;</span>
 			</span>
 		</div>
