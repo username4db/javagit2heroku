@@ -7,9 +7,14 @@
 	</div>
 
 	<div th:each="y : ${#numbers.sequence( 1, qr.size)}">
-		<span th:each="x : ${#numbers.sequence( 1, qr.size)}"> <span
-			th:text="${ qr.getModule(x, y) }"></span>
-		</span>
+		<div th:each="x : ${#numbers.sequence( 1, qr.size)}">
+
+			<!-- IF -->
+			<span th:if="${qr.getModule(x, y)}"> * </span>
+			<!-- ELSE -->
+			<span th:unless="${qr.getModule(x, y)}"> &nbsp; </span>
+
+		</div>
 	</div>
 </body>
 </html>
