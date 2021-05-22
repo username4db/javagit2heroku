@@ -1,5 +1,7 @@
 package org.username4db.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.sql.DataSource;
 
 import org.jsoup.Jsoup;
@@ -32,6 +35,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.username4db.repository.RecordRepo;
 import org.username4db.utility.MD5;
+import org.username4db.utility.qrcodegen.QrCode;
+import org.username4db.utility.qrcodegen.QrSegment;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlButton;
@@ -88,7 +93,7 @@ public class WebController {
 	}
 
 	@RequestMapping("/motp/{secret}/{PIN}")
-	String motp(Map<String, Object> model, @PathVariable(value = "secret") String secret,
+	public String motp(Map<String, Object> model, @PathVariable(value = "secret") String secret,
 			@PathVariable(value = "PIN") String PIN) {
 		String epoch = Long.toString(System.currentTimeMillis());
 		epoch = epoch.substring(0, epoch.length() - 4);
@@ -221,4 +226,21 @@ public class WebController {
 		return response.getBody();
 	}
 
+	@RequestMapping("/qr/{data}")
+	public String qr(Map<String, Object> model, @PathVariable(value = "data") String data) throws IOException {
+
+		QrCode qr = QrCode.encodeText(data, QrCode.Ecc.MEDIUM);
+		BufferedImage img = qr.toImage(4, 10);
+		// ImageIO.write(img, "png", new File("qr-code.png"));
+
+		List<QrSegment> segs = QrSegment.makeSegments(data);
+		qr = QrCode.encodeSegments(segs, QrCode.Ecc.HIGH, 5, 5, 2, false);
+		model.put("qr", qr);
+		for (int y = 0; y < qr.size; y++) {
+			for (int x = 0; x < qr.size; x++) {
+				qr.getModule(x, y);
+			}
+		}
+		return "qr";
+	}
 }

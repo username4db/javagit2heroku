@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout (~{::body},'db')}">
+<body>
+	<div class="container">
+		<H1 class="translate-middle" th:text="${qr}"></H1>
+	</div>
+</body>
+</html>
