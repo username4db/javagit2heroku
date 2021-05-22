@@ -5,5 +5,11 @@
 	<div class="container">
 		<H1 class="translate-middle" th:text="${qr}"></H1>
 	</div>
+
+	<div th:each="y : ${#numbers.sequence( 1, qr.size())}">
+		<span th:each="x : ${#numbers.sequence( 1, qr.size())}"> <span
+			th:text="${ qr.getModule(x, y) }"></span>
+		</span>
+	</div>
 </body>
 </html>

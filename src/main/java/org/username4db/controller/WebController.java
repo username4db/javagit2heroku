@@ -99,7 +99,7 @@ public class WebController {
 		epoch = epoch.substring(0, epoch.length() - 4);
 		MD5 hash = new MD5(epoch + secret + PIN);
 		model.put("motp", hash.asHex().substring(0, 6));
-		return "motp";
+		return "motp.html";
 	}
 
 	@RequestMapping("/htmlUnit")
@@ -241,6 +241,6 @@ public class WebController {
 				qr.getModule(x, y);
 			}
 		}
-		return "qr";
+		return "qr.html";
 	}
 }
