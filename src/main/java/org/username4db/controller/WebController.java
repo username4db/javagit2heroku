@@ -1,7 +1,7 @@
 package org.username4db.controller;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -62,7 +62,7 @@ public class WebController {
 
 	@RequestMapping("/")
 	String index() {
-		return "index";
+		return "index.html";
 	}
 
 	@RequestMapping("/ticks")
@@ -79,17 +79,17 @@ public class WebController {
 			}
 
 			model.put("records", output);
-			return "db";
+			return "db.html";
 		} catch (Exception e) {
 			model.put("message", e.getMessage());
-			return "error";
+			return "error.html";
 		}
 	}
 
 	@RequestMapping("/rec")
 	String rec(Map<String, Object> model) {
 		model.put("recs", recordRepo.findAll());
-		return "rec";
+		return "rec.html";
 	}
 
 	@RequestMapping("/motp/{secret}/{PIN}")
@@ -178,7 +178,7 @@ public class WebController {
 
 		if (HttpStatus.OK.equals(response.getStatusCode())) {
 			response.getHeaders().forEach((key, value) -> {
-				// LOGGER.info("{}={}", key, value);
+				LOGGER.info("{}={}", key, value);
 			});
 			Document htmlDoc = Jsoup.parse(id);
 			// LOGGER.info("disj = {} ", htmlDoc.getElementById("_disj").val());
@@ -226,12 +226,26 @@ public class WebController {
 		return response.getBody();
 	}
 
+	@RequestMapping("/qrcode/{data}")
+	public ResponseEntity qrcode(@PathVariable(value = "data") String data) throws IOException {
+
+		QrCode qr = QrCode.encodeText(data, QrCode.Ecc.MEDIUM);
+		BufferedImage img = qr.toImage(4, 10);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(img, "png", baos);
+		// ImageIO.write(img, "png", new File("qr-code.png"));
+		byte[] imageInByte = baos.toByteArray();
+		return ResponseEntity //
+				.status(HttpStatus.OK) //
+				.header(HttpHeaders.CONTENT_DISPOSITION, "filename='qrcode.png'") //
+				.contentType(MediaType.IMAGE_PNG) //
+				.body(imageInByte);
+	}
+
 	@RequestMapping("/qr/{data}")
 	public String qr(Map<String, Object> model, @PathVariable(value = "data") String data) throws IOException {
 
 		QrCode qr = QrCode.encodeText(data, QrCode.Ecc.MEDIUM);
-		BufferedImage img = qr.toImage(4, 10);
-		// ImageIO.write(img, "png", new File("qr-code.png"));
 
 		List<QrSegment> segs = QrSegment.makeSegments(data);
 		qr = QrCode.encodeSegments(segs, QrCode.Ecc.HIGH, 5, 5, 2, false);
@@ -243,4 +257,5 @@ public class WebController {
 		}
 		return "qr.html";
 	}
+
 }
