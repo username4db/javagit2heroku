@@ -181,7 +181,7 @@ public class WebController {
 				LOGGER.info("{}={}", key, value);
 			});
 			Document htmlDoc = Jsoup.parse(id);
-			// LOGGER.info("disj = {} ", htmlDoc.getElementById("_disj").val());
+			LOGGER.info("disj = {} ", htmlDoc.getElementById("_disj").val());
 		}
 		return response.getBody();
 	}

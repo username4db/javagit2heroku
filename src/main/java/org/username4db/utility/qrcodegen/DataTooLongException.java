@@ -47,6 +47,12 @@ package org.username4db.utility.qrcodegen;
  */
 public class DataTooLongException extends IllegalArgumentException {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2589817545236849491L;
+
+
 	public DataTooLongException() {}
 	
 	
