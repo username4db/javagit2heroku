@@ -1,5 +1,11 @@
 package org.username4db.batch;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,12 +21,21 @@ public class BatchJob {
 
 	@Scheduled(fixedRate = 60000)
 	public void timerRate() {
-		LOGGER.info("timerRate");
 	}
 
-	@Scheduled(cron = "00 */15 * * * ?")
+	@Scheduled(cron = "00 */30 * * * ?")
 	public void timerCron() {
 //		ResponseEntity<String> res = restTemp.getForEntity("https://javagit2heroku.herokuapp.com/", null);
 		LOGGER.info("timer");
+		HttpClient client = HttpClient.newHttpClient();
+		HttpRequest request = HttpRequest //
+				.newBuilder() //
+				.uri(URI.create("https://javagit2heroku.herokuapp.com/")) //
+				.build();
+		client.sendAsync(request, BodyHandlers.ofString()) //
+				.thenApply(HttpResponse::body) //
+				.thenAccept(str -> {
+				}) //
+				.join();
 	}
 }
